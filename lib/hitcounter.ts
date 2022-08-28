@@ -27,7 +27,11 @@ export class HitCounter extends Construct {
 				DOWNSTREAM_FUNCTION_NAME: props.downstream.functionName,
 				HITS_TABLE_NAME: table.tableName
 			}
-
 		})
+
+		// grant write permission to function
+		table.grantWriteData(this.handler)
+		// grant invoke permission to upstream function
+		props.downstream.grantInvoke(this.handler)
 	}
 }
