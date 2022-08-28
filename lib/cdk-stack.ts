@@ -1,6 +1,7 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as apigw from 'aws-cdk-lib/aws-apigateway';
 
 export class CdkStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -10,6 +11,10 @@ export class CdkStack extends Stack {
       runtime: lambda.Runtime.NODEJS_14_X,
       code: lambda.Code.fromAsset('lambda'),
       handler: 'hello.handler',
+    })
+
+    const  api = new apigw.LambdaRestApi(this, 'Endpoint', {
+      handler: hello
     })
 
   }
