@@ -9,12 +9,13 @@ export interface HitCounterProps {
 export class HitCounter extends Construct {
 	/** allow accessing the counter function */
 	public readonly handler: lambda.Function
+	public readonly table: dynamodb.Table
 
 	constructor(scope: Construct, id: string, props: HitCounterProps) {
 		super(scope, id);
 
 		// create dynamodb table
-		const table = new dynamodb.Table(this, 'Hits', {
+		this.table = new dynamodb.Table(this, 'Hits', {
 			partitionKey: {name: 'path', type: dynamodb.AttributeType.STRING}
 		});
 
@@ -25,12 +26,12 @@ export class HitCounter extends Construct {
 			code: lambda.Code.fromAsset('lambda'),
 			environment: {
 				DOWNSTREAM_FUNCTION_NAME: props.downstream.functionName,
-				HITS_TABLE_NAME: table.tableName
+				HITS_TABLE_NAME: this.table.tableName
 			}
 		})
 
 		// grant write permission to function
-		table.grantWriteData(this.handler)
+		this.table.grantWriteData(this.handler)
 		// grant invoke permission to upstream function
 		props.downstream.grantInvoke(this.handler)
 	}
