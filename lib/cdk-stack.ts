@@ -23,10 +23,12 @@ export class CdkStack extends Stack {
       handler: helloWithCounter.handler
     })
 
+    //FIXME find a way to provide localstack endpoint instead of real aws
     new TableViewer(this, 'ViewHitCounter', {
-      title: 'Hello Hits',
-      table: helloWithCounter.table
-    });
+        title: 'Hello Hits',
+        table: helloWithCounter.table
+      }
+    );
 
   }
 }
