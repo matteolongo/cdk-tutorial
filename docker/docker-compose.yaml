@@ -20,12 +20,19 @@ services:
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
       - PORT_WEB=8080
+      #- HOSTNAME_EXTERNAL=localhost
+      #- DOCKER_BRIDGE_IP=172.17.0.1
+      #- LAMBDA_DOCKER_NETWORK=localstack
       #- PERSISTENCE=${PERSISTENCE-}
-      #- LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY-}  # only required for Pro
-      #- LOCALSTACK_HOSTNAME=|
+      - LOCALSTACK_HOSTNAME=localstack
     volumes:
       - "${TMPDIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - ./bin:/docker-entrypoint-initaws.d
     env_file:
       - .env
+    networks:
+      - localstack
+
+networks:
+  localstack:
