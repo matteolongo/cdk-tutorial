@@ -7,6 +7,9 @@ export interface HitCounterProps {
 }
 
 export class HitCounter extends Construct {
+	/** allow accessing the counter function */
+	public readonly handler: lambda.Function
+
 	constructor(scope: Construct, id: string, props: HitCounterProps) {
 		super(scope, id);
 
@@ -16,7 +19,7 @@ export class HitCounter extends Construct {
 		});
 
 		// create lambda
-		const hitLambda = new lambda.Function(this, 'HitCounterHandler', {
+		this.handler = new lambda.Function(this, 'HitCounterHandler', {
 			runtime: lambda.Runtime.NODEJS_14_X,
 			handler: 'hitcounter.handler',
 			code: lambda.Code.fromAsset('lambda'),
