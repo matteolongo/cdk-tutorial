@@ -4,8 +4,9 @@ exports.handler = async (event) => {
     console.log("request:", JSON.stringify(event, undefined, 2))
 
     // create clients
-    const dynamo = new DynamoDB();
-    const lambda = new Lambda();
+    //FIXME configure endpoint as env var
+    const dynamo = new DynamoDB({endpoint: "http://localstack:4566"});
+    const lambda = new Lambda({endpoint: "http://localstack:4566"});
 
     // call downstream function and capture response
     await dynamo.updateItem({
