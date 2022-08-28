@@ -1,10 +1,10 @@
-const {DynamoDb, Lambda} = require('aws-sdk');
+const {DynamoDB, Lambda} = require('aws-sdk');
 
 exports.handler = async (event) => {
     console.log("request:", JSON.stringify(event, undefined, 2))
 
     // create clients
-    const dynamo = new DynamoDb();
+    const dynamo = new DynamoDB();
     const lambda = new Lambda();
 
     // call downstream function and capture response
