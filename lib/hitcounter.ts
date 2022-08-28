@@ -17,7 +17,7 @@ export class HitCounter extends Construct {
 		// create dynamodb table
 		this.table = new dynamodb.Table(this, 'Hits', {
 			partitionKey: {name: 'path', type: dynamodb.AttributeType.STRING},
-			encryption: dynamodb.TableEncryption.AWS_MANAGED
+			//encryption: dynamodb.TableEncryption.AWS_MANAGED
 		});
 
 		// create lambda
